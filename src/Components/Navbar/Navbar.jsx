@@ -17,27 +17,27 @@ const Navbar = () => {
         </div>
         <div className="flex flex-row  gap-3">
           <img
-            className="w-10 bg-black rounded-full shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)]"
+            className="w-10 cursor-pointer bg-black rounded-full shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)]"
             src={Facebook}
             alt="Facebook Navbar"
           />
           <img
-            className="w-10 rounded-full bg-black shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)]"
+            className="w-10 cursor-pointer rounded-full bg-black shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)]"
             src={Twitter}
             alt="Twitter Navbar"
           />
           <img
-            className="w-10 rounded-full bg-black shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)]"
+            className="w-10 cursor-pointer rounded-full bg-black shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)]"
             src={Instagram}
             alt="Instagram Navbar"
           />
           <img
-            className="w-10 rounded-full bg-black shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)]"
+            className="w-10 cursor-pointer rounded-full bg-black shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)]"
             src={Youtube}
             alt="Youtube Navbar"
           />
           <img
-            className="w-10 rounded-full bg-white border-black border-2 shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)]"
+            className="w-10 cursor-pointer rounded-full bg-white border-black border-2 shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)]"
             src={Whatsapp}
             alt="Whatsapp Navbar"
           />
