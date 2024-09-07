@@ -3,7 +3,7 @@ import Banner from "/assets/banner.svg";
 const HomeHead = () => {
   return (
     <div className="grid grid-cols-2 bg-gradient-to-l from-green-900 to-[#ffff] min-h-full min-w-full text-left justify-center ">
-      <div className="text-red-500 tracking-wider mx-auto h-fit my-[20%] flex flex-col">
+      <div className="text-[#cb0c4f] tracking-wider mx-auto h-fit my-[20%] flex flex-col">
         <div className="text-lg flex flex-row text-left mr-auto ml-[25%]">
           Bienvenidos a
         </div>
