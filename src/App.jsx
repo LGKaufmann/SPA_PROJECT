@@ -3,6 +3,8 @@ import Home from "./Components/Home/Home";
 
 import Footer from "./Components/Footer/Footer";
 import Header from "./Components/Navbar/Header";
+import Registro from "./Components/Registro/Registro";
+import Login from "./Components/Login/Login";
 
 function App() {
   return (
@@ -12,6 +14,8 @@ function App() {
           <Header />
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/registro" element={<Registro />} />
+            <Route path="/login" element={<Login />} />
           </Routes>
           <Footer />
         </div>
