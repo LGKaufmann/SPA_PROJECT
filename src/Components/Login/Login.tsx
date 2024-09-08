@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import User from "/assets/user.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../../redux/userAction";
+import { Spinner } from "../Spinner/Spinner";
 
 interface LoginState {
   email: string;
@@ -9,15 +12,20 @@ interface LoginState {
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
-  const { pathname } = useLocation();
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { loading, token } = useSelector((state: any) => state.users);
   const [user, setUser] = useState<LoginState>({
     email: "",
     password: "",
   });
+
+  useEffect(() => {
+    if (token) {
+      navigate("/home");
+    }
+  }, [token, navigate]);
 
   const inputsStyle =
     "h-7 w-[268px] pl-6 rounded-3xl bg-white text-black shadow-inner shadow-gray-300 font-semibold text-xs md:w-[536px] md:h-12 md:text-xl placeholder:text-[#cb0c4f] placeholder:font-semibold md:placeholder:text-xl";
@@ -29,13 +37,13 @@ const Login: React.FC = () => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-
+    dispatch<any>(loginUser(user));
     resetForm();
   };
 
-  const handleModal = () => {
-    setIsModalOpen(true);
-  };
+  useEffect(() => {
+    setUser({ email, password });
+  }, [email, password]);
 
   return (
     <main className="max-w-screen flex flex-col items-center mx-auto bg-gradient-to-r py-10 from-green-100 to-[#ffff]">
@@ -71,7 +79,7 @@ const Login: React.FC = () => {
             type="submit"
             onClick={handleSubmit}
           >
-            {"Iniciar Sesión"}
+            {loading ? <Spinner /> : "Iniciar Sesión"}
           </button>
         </section>
       </form>

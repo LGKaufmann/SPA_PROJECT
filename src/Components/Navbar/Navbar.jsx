@@ -1,15 +1,24 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Logo from "../../../public/assets/logo.png";
 import Facebook from "/assets/NavBar Facebook.svg";
 import Instagram from "/assets/NavBar Instagram.svg";
 import Whatsapp from "/assets/whatsapp.svg";
+import { useDispatch } from "react-redux";
+import { logoutUser } from "../../redux/userAction";
 
 const Navbar = () => {
   const location = useLocation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const isHomePage =
     location.pathname === "/" ||
     location.pathname === "/registro" ||
     location.pathname === "/login";
+
+  const handleLogout = () => {
+    dispatch(logoutUser());
+    navigate("/");
+  };
 
   return (
     <nav className="bg-gradient-to-r from-[#ffffff] to-[#cb0c4f] p-7">
@@ -55,6 +64,11 @@ const Navbar = () => {
           <>
             {/* Mostrar solo en otras páginas */}
             <div className="flex flex-row gap-3">
+              <div>
+                <button onClick={handleLogout} className="">
+                  Cerrar sesion
+                </button>
+              </div>
               <img
                 className="w-10 cursor-pointer bg-black rounded-full shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)]"
                 src={Facebook}

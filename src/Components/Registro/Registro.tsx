@@ -1,30 +1,36 @@
 import React, { useState } from "react";
 import User from "/assets/user.svg";
+import { useDispatch } from "react-redux";
+import { registerUser } from "../../redux/userAction";
+import { useNavigate } from "react-router-dom";
 
 interface FormState {
-  name: string;
-  surname: string;
+  nombre: string;
+  apellido: string;
   email: string;
-  dni: string;
-  phoneNumber: string;
   password: string;
   confirmPassword: string;
+  DNI: string;
+  celular: string;
 }
 
 const Registro: React.FC = () => {
   const [formValues, setFormValues] = useState<FormState>({
-    name: "",
-    surname: "",
+    nombre: "",
+    apellido: "",
     email: "",
     password: "",
     confirmPassword: "",
-    dni: "",
-    phoneNumber: "",
+    DNI: "",
+    celular: "",
   });
 
   const [errors, setErrors] = useState<{ [key in keyof FormState]?: string }>(
     {}
   );
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -34,11 +40,11 @@ const Registro: React.FC = () => {
   const validateForm = () => {
     const newErrors: { [key in keyof FormState]?: string } = {};
 
-    if (formValues.name.length < 3 || formValues.name.length > 12) {
-      newErrors.name = "El nombre debe tener entre 3 y 12 caracteres.";
+    if (formValues.nombre.length < 3 || formValues.nombre.length > 12) {
+      newErrors.nombre = "El nombre debe tener entre 3 y 12 caracteres.";
     }
-    if (formValues.surname.length < 3 || formValues.surname.length > 12) {
-      newErrors.surname = "El apellido debe tener entre 3 y 12 caracteres.";
+    if (formValues.apellido.length < 3 || formValues.apellido.length > 12) {
+      newErrors.apellido = "El apellido debe tener entre 3 y 12 caracteres.";
     }
     if (!/^[\w-]+@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(formValues.email)) {
       newErrors.email = "El email no es válido.";
@@ -49,11 +55,11 @@ const Registro: React.FC = () => {
     if (formValues.password !== formValues.confirmPassword) {
       newErrors.confirmPassword = "Las contraseñas no coinciden.";
     }
-    if (!/^\d{8,15}$/.test(formValues.dni)) {
-      newErrors.dni = "El DNI debe tener entre 8 y 15 dígitos.";
+    if (!/^\d{8,15}$/.test(formValues.DNI)) {
+      newErrors.DNI = "El DNI debe tener entre 8 y 15 dígitos.";
     }
-    if (!/^\d{10,15}$/.test(formValues.phoneNumber)) {
-      newErrors.phoneNumber =
+    if (!/^\d{10,15}$/.test(formValues.celular)) {
+      newErrors.celular =
         "El número de teléfono debe tener entre 10 y 15 dígitos.";
     }
 
@@ -64,11 +70,12 @@ const Registro: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validateForm()) {
-      // Lógica para manejar el envío del formulario
+      // Envía los datos del formulario a Redux
+      dispatch<any>(registerUser(formValues));
       console.log("Formulario enviado", formValues);
+      navigate("/login");
     }
   };
-
   return (
     <div className="max-w-screen mx-auto bg-gradient-to-r py-10 from-green-100 to-[#ffff]">
       <div className="flex flex-col items-center justify-center">
@@ -80,23 +87,25 @@ const Registro: React.FC = () => {
       <form onSubmit={handleSubmit} className="space-y-4 mx-[500px]">
         <div>
           <label
-            htmlFor="name"
+            htmlFor="nombre"
             className="block text-xl font-semibold text-gray-700"
           >
             Nombre:
           </label>
           <input
             type="text"
-            id="name"
-            name="name"
-            value={formValues.name}
+            id="nombre"
+            name="nombre"
+            value={formValues.nombre}
             onChange={handleChange}
             className="mt-1 block text-black bg-white w-full p-2 border border-[#cb0c4f] rounded-md"
             required
             minLength={3}
             maxLength={12}
           />
-          {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
+          {errors.nombre && (
+            <p className="text-red-500 text-sm">{errors.nombre}</p>
+          )}
         </div>
 
         <div>
@@ -108,17 +117,17 @@ const Registro: React.FC = () => {
           </label>
           <input
             type="text"
-            id="surname"
-            name="surname"
-            value={formValues.surname}
+            id="apellido"
+            name="apellido"
+            value={formValues.apellido}
             onChange={handleChange}
             className="mt-1 block text-black bg-white w-full p-2 border border-[#cb0c4f] rounded-md"
             required
             minLength={3}
             maxLength={12}
           />
-          {errors.surname && (
-            <p className="text-red-500 text-sm">{errors.surname}</p>
+          {errors.apellido && (
+            <p className="text-red-500 text-sm">{errors.apellido}</p>
           )}
         </div>
 
@@ -168,7 +177,7 @@ const Registro: React.FC = () => {
           <div>
             <label
               htmlFor="confirmPassword"
-              className="block text-xl font-semibold text-gray-700"
+              className="block text-xl text-nowrap font-semibold text-gray-700"
             >
               Repetir Contraseña:
             </label>
@@ -196,14 +205,14 @@ const Registro: React.FC = () => {
           </label>
           <input
             type="text"
-            id="dni"
-            name="dni"
-            value={formValues.dni}
+            id="DNI"
+            name="DNI"
+            value={formValues.DNI}
             onChange={handleChange}
             className="mt-1 block text-black bg-white w-full p-2 border border-[#cb0c4f] rounded-md"
             required
           />
-          {errors.dni && <p className="text-red-500 text-sm">{errors.dni}</p>}
+          {errors.DNI && <p className="text-red-500 text-sm">{errors.DNI}</p>}
         </div>
 
         <div>
@@ -215,15 +224,15 @@ const Registro: React.FC = () => {
           </label>
           <input
             type="text"
-            id="phoneNumber"
-            name="phoneNumber"
-            value={formValues.phoneNumber}
+            id="celular"
+            name="celular"
+            value={formValues.celular}
             onChange={handleChange}
             className="mt-1 block text-black bg-white w-full p-2 border border-[#cb0c4f] rounded-md"
             required
           />
-          {errors.phoneNumber && (
-            <p className="text-red-500 text-sm">{errors.phoneNumber}</p>
+          {errors.celular && (
+            <p className="text-red-500 text-sm">{errors.celular}</p>
           )}
         </div>
 

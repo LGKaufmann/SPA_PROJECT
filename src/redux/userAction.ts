@@ -22,7 +22,7 @@ const loginUser = (user: any) => {
   return async (dispatch: Dispatch) => {
     try {
       dispatch(setLoading(true));
-      const { data } = await axios.post("/auth/login", user);
+      const { data } = await axios.post("/usuarios/login", user);
       Swal.fire({
         icon: "success",
         text: "Sesión iniciada correctamente",
@@ -57,8 +57,12 @@ const registerUser = (user: any) => {
   return async (dispatch: Dispatch) => {
     try {
       dispatch(setLoading(true));
-      const { data } = await axios.post("/auth/register", user);
+      const { data } = await axios.post("/usuarios/crear", user);
       dispatch(register(data));
+      Toast.fire({
+        icon: "success",
+        text: "Registro exitoso!",
+      });
     } catch (error: any) {
       console.error((error as any).message);
       Toast.fire({

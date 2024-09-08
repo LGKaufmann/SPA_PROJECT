@@ -5,6 +5,7 @@ import Footer from "./Components/Footer/Footer";
 import Header from "./Components/Navbar/Header";
 import Registro from "./Components/Registro/Registro";
 import Login from "./Components/Login/Login";
+import { Landing } from "./Components/Landing/Landing";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/registro" element={<Registro />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/home" element={<Landing />} />
           </Routes>
           <Footer />
         </div>
