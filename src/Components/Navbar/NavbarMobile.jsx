@@ -1,12 +1,27 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Logo from "../../../public/assets/logo.png";
 import Facebook from "/assets/NavBar Facebook.svg";
 import Instagram from "/assets/NavBar Instagram.svg";
 import Whatsapp from "/assets/whatsapp.svg";
+import { useDispatch } from "react-redux";
+import { logoutUser } from "../../redux/userAction";
 
 const NavbarMobile = () => {
+  const location = useLocation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const isHomePage =
+    location.pathname === "/" ||
+    location.pathname === "/registro" ||
+    location.pathname === "/login";
+
+  const handleLogout = () => {
+    dispatch(logoutUser());
+    navigate("/");
+  };
+
   return (
-    <nav className="flex items-center lg:hidden w-full h-20 justify-evenly px-10 bg-gradient-to-r from-[#ffffff] to-[#cb0c4f]">
+    <nav className="flex items-center lg:hidden w-full h-20 justify-evenly px-4 bg-gradient-to-r from-[#ffffff] to-[#cb0c4f]">
       <Link to="/">
         <div className="flex flex-row justify-evenly items-center gap-2">
           <img className="w-20 h-16" src={Logo} alt="Logo" />
@@ -30,6 +45,13 @@ const NavbarMobile = () => {
           alt="Instagram Navbar"
         />
       </div>
+      {!isHomePage && (
+        <div className="flex ml-3">
+          <button onClick={handleLogout} className="text-xs text-nowrap">
+            Cerrar sesion
+          </button>
+        </div>
+      )}
     </nav>
   );
 };

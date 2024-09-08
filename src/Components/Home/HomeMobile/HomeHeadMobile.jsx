@@ -6,14 +6,14 @@ const HomeHeadMobile = () => {
   return (
     <div className="flex flex-col w-full items-center  bg-gradient-to-l from-green-900 to-[#ffff] h-[100vh] text-nowrap">
       <div className="flex flex-row items-center justify-center gap-4 w-full mx-auto bg-gradient-to-r from-[#ffffff] to-[#ad4268] rounded-b-[20px]">
-        <Link to="/login/select-user">
+        <Link to="/login">
           <button className="font-bold bg-green-500 rounded-full text-white text-xs px-7 py-2 mx-3 my-2">
             INICIAR SESIÓN
           </button>
         </Link>
-        <Link to="/about">
-          <button className="font-bold bg-yellow-500 rounded-full text-white text-xs sm:px-7 px-2 py-2 mx-3 my-2">
-            CONÓCENOS
+        <Link to="/registro">
+          <button className="font-bold bg-[#a7375e] rounded-full text-white text-xs sm:px-7 px-2 py-2 mx-3 my-2">
+            REGISTRATE
           </button>
         </Link>
       </div>

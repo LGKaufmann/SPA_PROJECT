@@ -84,11 +84,11 @@ const Registro: React.FC = () => {
         </h2>
         <img src={User} alt="user icon" className="w-80 h-80" />
       </div>
-      <form onSubmit={handleSubmit} className="space-y-4 mx-[500px]">
+      <form onSubmit={handleSubmit} className="space-y-4 mx-10 lg:mx-[500px]">
         <div>
           <label
             htmlFor="nombre"
-            className="block text-xl font-semibold text-gray-700"
+            className="block sm:text-xl font-semibold text-gray-700"
           >
             Nombre:
           </label>
@@ -111,7 +111,7 @@ const Registro: React.FC = () => {
         <div>
           <label
             htmlFor="surname"
-            className="block text-xl font-semibold text-gray-700"
+            className="block sm:text-xl  font-semibold text-gray-700"
           >
             Apellido:
           </label>
@@ -134,7 +134,7 @@ const Registro: React.FC = () => {
         <div>
           <label
             htmlFor="email"
-            className="block text-xl font-semibold text-gray-700"
+            className="block sm:text-xl  font-semibold text-gray-700"
           >
             Email:
           </label>
@@ -156,7 +156,7 @@ const Registro: React.FC = () => {
           <div>
             <label
               htmlFor="password"
-              className="block text-xl font-semibold text-gray-700"
+              className="block sm:text-xl  font-semibold text-gray-700"
             >
               Contraseña:
             </label>
@@ -177,7 +177,7 @@ const Registro: React.FC = () => {
           <div>
             <label
               htmlFor="confirmPassword"
-              className="block text-xl text-nowrap font-semibold text-gray-700"
+              className="block sm:text-xl  text-nowrap font-semibold text-gray-700"
             >
               Repetir Contraseña:
             </label>
@@ -199,7 +199,7 @@ const Registro: React.FC = () => {
         <div>
           <label
             htmlFor="dni"
-            className="block text-xl font-semibold text-gray-700"
+            className="block sm:text-xl  font-semibold text-gray-700"
           >
             DNI:
           </label>
@@ -218,7 +218,7 @@ const Registro: React.FC = () => {
         <div>
           <label
             htmlFor="phoneNumber"
-            className="block text-xl font-semibold text-gray-700"
+            className="block sm:text-xl  font-semibold text-gray-700"
           >
             Número de Teléfono:
           </label>

@@ -75,7 +75,7 @@ const Login: React.FC = () => {
             />
           </div>
           <button
-            className="w-[156px] h-9 bg-green-700 rounded-3xl text-base text-white font-semibold md:h-14 md:w-72 md:text-2xl"
+            className="w-[156px] h-11 bg-green-700 rounded-3xl text-base text-white font-semibold md:h-14 md:w-72 md:text-2xl"
             type="submit"
             onClick={handleSubmit}
           >
@@ -84,7 +84,7 @@ const Login: React.FC = () => {
         </section>
       </form>
       <Link to="/registro">
-        <button className="w-[188px] h-10 my-6 bg-green-700 rounded-3xl text-lg text-white font-semibold md:h-14 md:w-72 md:text-2xl">
+        <button className="w-[188px] h-12 my-6 bg-green-700 rounded-3xl text-lg text-white font-semibold md:h-14 md:w-72 md:text-2xl">
           Crear cuenta
         </button>
       </Link>
