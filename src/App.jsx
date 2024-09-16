@@ -16,6 +16,7 @@ import { fetchUserData } from "./redux/userAction";
 import { LoginPersonal } from "./Components/Login/LoginPersonal";
 import LandingAdmin from "./Components/Landing/LandingAdmin";
 import Opiniones from "./Components/Opiniones/Opiniones";
+import { ProtectedRoutes } from "./Components/ProtectedRoutes/ProtectedRoutes";
 
 function App() {
   const dispatch = useDispatch();
@@ -38,12 +39,55 @@ function App() {
             <Route path="/registro" element={<Registro />} />
             <Route path="/login" element={<Login />} />
             <Route path="/loginPersonal" element={<LoginPersonal />} />
-            <Route path="/home" element={<Landing />} />
-            <Route path="/admin" element={<LandingAdmin />} />
-            <Route path="/empleo" element={<Empleo />} />
-            <Route path="/noticias" element={<Noticias />} />
-            <Route path="/quienes-somos" element={<QuienesSomos />} />
-            <Route path="/servicios" element={<Servicios />} />
+            <Route
+              path="/home"
+              element={
+                <ProtectedRoutes>
+                  {" "}
+                  <Landing />{" "}
+                </ProtectedRoutes>
+              }
+            />
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoutes>
+                  <LandingAdmin />
+                </ProtectedRoutes>
+              }
+            />
+            <Route
+              path="/empleo"
+              element={
+                <ProtectedRoutes> element={<Empleo />} </ProtectedRoutes>
+              }
+            />
+            <Route
+              path="/noticias"
+              element={
+                <ProtectedRoutes>
+                  {" "}
+                  <Noticias />{" "}
+                </ProtectedRoutes>
+              }
+            />
+            <Route
+              path="/quienes-somos"
+              element={
+                <ProtectedRoutes>
+                  <QuienesSomos />{" "}
+                </ProtectedRoutes>
+              }
+            />
+            <Route
+              path="/servicios"
+              element={
+                <ProtectedRoutes>
+                  {" "}
+                  <Servicios />{" "}
+                </ProtectedRoutes>
+              }
+            />
             <Route path="/opiniones" element={<Opiniones />} />
           </Routes>
           <Footer />
