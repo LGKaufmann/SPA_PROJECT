@@ -23,8 +23,7 @@ interface ITurno {
 
 const LandingAdmin: React.FC = () => {
   const [turnos, setTurnos] = useState<ITurno[]>([]);
-  console.log(turnos);
-  const { user } = useSelector((state: any) => state.users);
+
   useEffect(() => {
     // Función para obtener los turnos
     const fetchTurnos = async () => {
@@ -43,7 +42,7 @@ const LandingAdmin: React.FC = () => {
     <div className="min-h-screen bg-gradient-to-r from-green-700 to-[#cb0c4f] p-8">
       <header className="text-center mb-12">
         <h1 className="text-4xl font-bold text-white mb-4 drop-shadow-lg">
-          Bienvenido, {user?.nombre}!
+          Bienvenido, Administrador!
         </h1>
         <p className="text-xl text-white font-light">
           Aquí puedes ver todos los turnos reservados.

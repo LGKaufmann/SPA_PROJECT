@@ -14,10 +14,10 @@ interface ICard {
 const CardLanding: React.FC<ICard> = ({ id, nombre, descripcion, precio }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state: any) => state.users);
-  const [reserved, setReserved] = useState(false);
   const [date, setDate] = useState(new Date());
   const [time, setTime] = useState("");
   const [isFormVisible, setIsFormVisible] = useState(false);
+  const token = localStorage.getItem("token");
 
   const handleDateChange = (newDate) => {
     setDate(newDate);
@@ -33,16 +33,13 @@ const CardLanding: React.FC<ICard> = ({ id, nombre, descripcion, precio }) => {
 
     const turnoData = {
       servicioId: id,
-      usuarioId: user?._id,
       fecha: date,
       time: time,
     };
 
-    dispatch<any>(crearTurno(turnoData));
+    dispatch<any>(crearTurno(turnoData, token as string));
 
     setIsFormVisible(false);
-
-    setReserved(true);
   };
 
   const handleReserve = () => {

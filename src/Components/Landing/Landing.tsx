@@ -7,7 +7,6 @@ export const Landing = () => {
   const dispatch = useDispatch();
   const { services } = useSelector((state: any) => state.services);
   const { user } = useSelector((state: any) => state.users);
-  console.log(user);
 
   useEffect(() => {
     dispatch<any>(getServicesAction());

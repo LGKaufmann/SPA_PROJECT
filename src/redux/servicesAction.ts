@@ -29,10 +29,14 @@ const getServicesAction = () => {
   };
 };
 
-const crearTurno = (turno: any) => {
+const crearTurno = (turno: any, token: string) => {
   return async (dispatch: Dispatch) => {
     try {
-      await axios.post("/servicios/turno", turno);
+      await axios.post("/servicios/turno", turno, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       Swal.fire({
         icon: "success",
         text: "Servicio reservado correctamente. Un empleado del spa se estará comunicando con usted vía email o WhatsApp.",
