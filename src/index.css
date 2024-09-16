@@ -70,3 +70,44 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+.custom-calendar {
+  --calendar-background-color: white;
+  --calendar-border-color: #cb0c4f;
+  --calendar-hover-color: #cb0c4f;
+  --calendar-text-color: #4a5568;
+}
+
+.custom-calendar button {
+  background-color: transparent;
+  color: var(--calendar-text-color);
+  border-radius: 50%;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.custom-calendar button:enabled:hover {
+  background-color: var(--calendar-hover-color);
+  color: white;
+}
+
+.custom-calendar .react-calendar__tile--active {
+  background-color: var(--calendar-hover-color) !important;
+  color: white !important;
+}
+
+.custom-calendar .react-calendar__navigation__label__arrow {
+  color: var(--calendar-hover-color);
+}
+
+.custom-calendar .react-calendar__month-view__days__day--weekend {
+  color: #f56565; /* color para los fines de semana */
+}
+
+.custom-calendar .react-calendar__tile--now {
+  background-color: #f7fafc; /* color para el día de hoy */
+  border: 1px solid var(--calendar-border-color);
+}
+
+.custom-calendar .react-calendar__navigation button {
+  color: var(--calendar-hover-color);
+}

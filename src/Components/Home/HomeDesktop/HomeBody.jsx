@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import SPA from "/assets/spa.svg";
 
 export const HomeBody = () => {
@@ -37,6 +38,12 @@ export const HomeBody = () => {
               adaptada a tus necesidades.
             </b>
           </p>
+          <Link
+            to="/opiniones"
+            className="text-[#cb0c4f] text-center text-xl font-extrabold hover:text-gray-300 hover:underline"
+          >
+            Conoce las opiniones de la página
+          </Link>
           <p className="items-center text-[#cb0c4f] self-center text-center font-light text-2xl text-wrap mx-[15%] my-5">
             <b className="font-extrabold">Únase a nosotros</b> en este viaje
             hacia{" "}

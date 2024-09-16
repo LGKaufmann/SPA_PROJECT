@@ -16,23 +16,20 @@ const userSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
+    userData: (state, action) => {
+      state.user = action.payload;
+    },
     login: (state, action) => {
-      // console.log("login", state.user, state.token);
       state.token = action.payload.token;
       localStorage.setItem("token", action.payload.token);
-      // console.log("logind", state.user, state.token);
     },
     register: (state, action) => {
       state.user = action.payload;
     },
     logout: (state) => {
-      // console.log("logout", state.user, state.token);
-
       state.user = null;
       state.token = null;
       localStorage.removeItem("token");
-
-      // console.log("logoutd", state.user, state.token);
     },
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.loading = action.payload;
@@ -42,4 +39,5 @@ const userSlice = createSlice({
 
 export default userSlice;
 
-export const { login, logout, setLoading, register } = userSlice.actions;
+export const { login, logout, setLoading, register, userData } =
+  userSlice.actions;

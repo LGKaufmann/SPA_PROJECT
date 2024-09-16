@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import axios from "../../utils/axios";
-import { login, logout, register, setLoading } from "./userSlice";
+import { login, logout, register, setLoading, userData } from "./userSlice";
 import Swal from "sweetalert2";
 
 const Toast = Swal.mixin({
@@ -75,4 +75,28 @@ const registerUser = (user: any) => {
   };
 };
 
-export { registerUser, loginUser, logoutUser };
+const fetchUserData = (token: string) => {
+  return async (dispatch: Dispatch) => {
+    try {
+      dispatch(setLoading(true));
+      if (!token) {
+        throw new Error("No token available");
+      }
+
+      const response = await axios.get("/usuarios/datos", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      dispatch(userData(response.data));
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      throw error;
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
+};
+
+export { registerUser, loginUser, logoutUser, fetchUserData };

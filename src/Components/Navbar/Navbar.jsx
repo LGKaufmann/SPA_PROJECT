@@ -3,16 +3,21 @@ import Logo from "../../../public/assets/logo.png";
 import Facebook from "/assets/NavBar Facebook.svg";
 import Instagram from "/assets/NavBar Instagram.svg";
 import Whatsapp from "/assets/whatsapp.svg";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../../redux/userAction";
 
 const Navbar = () => {
   const location = useLocation();
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.users);
+  console.log(user);
+
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
   const isHomePage =
     location.pathname === "/" ||
     location.pathname === "/registro" ||
+    location.pathname === "/loginPersonal" ||
     location.pathname === "/login";
 
   const handleLogout = () => {
@@ -24,7 +29,15 @@ const Navbar = () => {
     <nav className="bg-gradient-to-r from-[#ffffff] to-[#cb0c4f] p-7">
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex text-white text-lg font-bold">
-          <Link to="/">
+          <Link
+            to={
+              !token
+                ? "/"
+                : user?.email === "admin@gmail.com"
+                ? "/admin"
+                : "/home"
+            }
+          >
             <img src={Logo} className="w-28 h-28 rounded-xl" alt="logo" />
           </Link>
         </div>
@@ -32,21 +45,28 @@ const Navbar = () => {
         {/* Mostrar solo en la página de inicio */}
         {isHomePage ? (
           <div className="flex flex-row gap-3">
-            <img
-              className="w-10 cursor-pointer bg-black rounded-full shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)]"
-              src={Facebook}
-              alt="Facebook Navbar"
-            />
-            <img
-              className="w-10 cursor-pointer rounded-full bg-black shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)]"
-              src={Instagram}
-              alt="Instagram Navbar"
-            />
-            <img
-              className="w-10 cursor-pointer rounded-full bg-white border-black border-2 shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)]"
-              src={Whatsapp}
-              alt="Whatsapp Navbar"
-            />
+            <a href="https://www.facebook.com">
+              <img
+                className="w-10 cursor-pointer bg-black rounded-full shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)]"
+                src={Facebook}
+                alt="Facebook Navbar"
+              />
+            </a>
+            <a href="https://www.instagram.com">
+              <img
+                className="w-10 cursor-pointer rounded-full bg-black shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)]"
+                src={Instagram}
+                alt="Instagram Navbar"
+              />
+            </a>
+            <a href="https://wa.me/1234567890">
+              <img
+                href="https://wa.me/1234567890"
+                className="w-10 cursor-pointer rounded-full bg-white border-black border-2 shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)]"
+                src={Whatsapp}
+                alt="Whatsapp Navbar"
+              />
+            </a>
             <div className="flex gap-x-2 ml-4">
               <Link to="/login">
                 <button className="bg-white border-2 border-green-700 text-[#cb0c4f] font-semibold py-2 px-4 rounded">
@@ -64,55 +84,55 @@ const Navbar = () => {
           <>
             {/* Mostrar solo en otras páginas */}
             <div className="flex flex-row gap-3">
-              <div>
-                <button onClick={handleLogout} className="">
-                  Cerrar sesion
-                </button>
-              </div>
-              <img
-                className="w-10 cursor-pointer bg-black rounded-full shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)]"
-                src={Facebook}
-                alt="Facebook Navbar"
-              />
-              <img
-                className="w-10 cursor-pointer rounded-full bg-black shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)]"
-                src={Instagram}
-                alt="Instagram Navbar"
-              />
-              <img
-                className="w-10 cursor-pointer rounded-full bg-white border-black border-2 shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)]"
-                src={Whatsapp}
-                alt="Whatsapp Navbar"
-              />
+              <a href="https://www.facebook.com">
+                <img
+                  className="w-10 cursor-pointer bg-black rounded-full shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)]"
+                  src={Facebook}
+                  alt="Facebook Navbar"
+                />
+              </a>
+              <a href="https://www.instagram.com">
+                <img
+                  className="w-10 cursor-pointer rounded-full bg-black shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)]"
+                  src={Instagram}
+                  alt="Instagram Navbar"
+                />
+              </a>
+              <a href="https://wa.me/1234567890">
+                <img
+                  href="https://wa.me/1234567890"
+                  className="w-10 cursor-pointer rounded-full bg-white border-black border-2 shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)]"
+                  src={Whatsapp}
+                  alt="Whatsapp Navbar"
+                />
+              </a>
             </div>
-            <div className="space-x-4">
+            <div className="flex justify-center items-center space-x-4">
               <Link
                 to="/quienes-somos"
                 className="text-white hover:text-gray-300"
               >
                 ¿Quiénes Somos?
               </Link>
-              <Link to="/servicios" className="text-white hover:text-gray-300">
-                Servicios
-              </Link>
+
               <Link to="/noticias" className="text-white hover:text-gray-300">
                 Noticias
               </Link>
-              <Link
-                to="/acceso-personal"
-                className="text-white hover:text-gray-300"
-              >
-                Personal
-              </Link>
-              <Link
-                to="/acceso-clientes"
-                className="text-white hover:text-gray-300"
-              >
-                Clientes
-              </Link>
+
               <Link to="/empleo" className="text-white hover:text-gray-300">
                 Empleo
               </Link>
+              <Link to="/opiniones" className="text-white hover:text-gray-300">
+                Opiniones
+              </Link>
+              <div>
+                <span
+                  onClick={handleLogout}
+                  className="bg-inherit text-white hover:text-gray-300 font-medium cursor-pointer"
+                >
+                  Cerrar sesion
+                </span>
+              </div>
             </div>
           </>
         )}
