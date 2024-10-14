@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import dayjs from "dayjs"; // Biblioteca para manejo de fechas
-import Whatsapp from "../../../public/assets/WhatsApp.svg";
+import Whatsapp from "../../../public/assets/whatsapp.svg";
 
 interface ITurno {
   _id: string;
