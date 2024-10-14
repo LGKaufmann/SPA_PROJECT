@@ -1,6 +1,13 @@
 import { Dispatch } from "redux";
 import axios from "../../utils/axios";
-import { login, logout, register, setLoading, userData } from "./userSlice";
+import {
+  login,
+  logout,
+  profesionales,
+  register,
+  setLoading,
+  userData,
+} from "./userSlice";
 import Swal from "sweetalert2";
 
 const Toast = Swal.mixin({
@@ -88,6 +95,7 @@ const fetchUserData = (token: string) => {
           Authorization: `Bearer ${token}`,
         },
       });
+      console.log(response);
 
       dispatch(userData(response.data));
     } catch (error) {
@@ -98,5 +106,27 @@ const fetchUserData = (token: string) => {
     }
   };
 };
+const obtenerProfesionales = () => {
+  return async (dispatch: Dispatch) => {
+    try {
+      dispatch(setLoading(true));
 
-export { registerUser, loginUser, logoutUser, fetchUserData };
+      const response = await axios.get("/usuarios/profesionales", {});
+
+      dispatch(profesionales(response.data));
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      throw error;
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
+};
+
+export {
+  registerUser,
+  loginUser,
+  logoutUser,
+  fetchUserData,
+  obtenerProfesionales,
+};

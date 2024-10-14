@@ -3,6 +3,7 @@ import User from "/assets/user.svg";
 import { useDispatch } from "react-redux";
 import { registerUser } from "../../redux/userAction";
 import { useNavigate } from "react-router-dom";
+import background from "/assets/background.jpg";
 
 interface FormState {
   nombre: string;
@@ -12,6 +13,7 @@ interface FormState {
   confirmPassword: string;
   DNI: string;
   celular: string;
+  userType: string; // Nuevo campo para el rol
 }
 
 const Registro: React.FC = () => {
@@ -23,16 +25,18 @@ const Registro: React.FC = () => {
     confirmPassword: "",
     DNI: "",
     celular: "",
+    userType: "cliente", // Inicializado vacío
   });
 
   const [errors, setErrors] = useState<{ [key in keyof FormState]?: string }>(
     {}
   );
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
   };
@@ -62,6 +66,9 @@ const Registro: React.FC = () => {
       newErrors.celular =
         "El número de teléfono debe tener entre 10 y 15 dígitos.";
     }
+    if (!formValues.userType) {
+      newErrors.userType = "Debe seleccionar un rol.";
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -70,180 +77,159 @@ const Registro: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validateForm()) {
-      // Envía los datos del formulario a Redux
-      dispatch<any>(registerUser(formValues));
+      dispatch<any>(registerUser(formValues)); // Ahora también envía el rol
       console.log("Formulario enviado", formValues);
       navigate("/login");
     }
   };
+
+  const inputsStyle =
+    "h-10 w-full pl-4 rounded-3xl bg-white text-black shadow-inner shadow-gray-300 font-semibold text-lg placeholder:text-[#cb0c4f] placeholder:font-semibold";
+
   return (
-    <div className="max-w-screen mx-auto bg-gradient-to-r py-10 from-green-100 to-[#ffff]">
-      <div className="flex flex-col items-center justify-center">
-        <h2 className="text-5xl font-bold text-black mb-6 text-center">
-          Registro
-        </h2>
-        <img src={User} alt="user icon" className="w-80 h-80" />
-      </div>
-      <form onSubmit={handleSubmit} className="space-y-4 mx-10 lg:mx-[500px]">
-        <div>
-          <label
-            htmlFor="nombre"
-            className="block sm:text-xl font-semibold text-gray-700"
-          >
-            Nombre:
-          </label>
+    <main className="flex flex-col items-center justify-center h-screen mx-auto relative">
+      <div
+        className="absolute inset-0 bg-cover"
+        style={{
+          backgroundImage: `url(${background})`,
+          filter: "brightness(0.5)",
+        }}
+      ></div>
+      <form
+        onSubmit={handleSubmit}
+        className="relative w-full max-w-lg flex flex-col items-center gap-4 p-6 rounded-3xl border border-[#cb0c4f] bg-white bg-opacity-15 backdrop-blur-lg"
+      >
+        <div className="flex flex-col items-center justify-center mb-4">
+          <h2 className="text-3xl font-bold text-[#cb0c4f] text-center">
+            Registro
+          </h2>
+          <img
+            src={User}
+            alt="user icon"
+            className="w-24 h-24 md:w-32 md:h-32"
+          />
+        </div>
+        <section className="w-full flex flex-col items-center gap-4">
           <input
             type="text"
             id="nombre"
             name="nombre"
             value={formValues.nombre}
             onChange={handleChange}
-            className="mt-1 block text-black bg-white w-full p-2 border border-[#cb0c4f] rounded-md"
+            placeholder="Nombre"
+            className={inputsStyle}
             required
-            minLength={3}
-            maxLength={12}
           />
           {errors.nombre && (
             <p className="text-red-500 text-sm">{errors.nombre}</p>
           )}
-        </div>
 
-        <div>
-          <label
-            htmlFor="surname"
-            className="block sm:text-xl  font-semibold text-gray-700"
-          >
-            Apellido:
-          </label>
           <input
             type="text"
             id="apellido"
             name="apellido"
             value={formValues.apellido}
             onChange={handleChange}
-            className="mt-1 block text-black bg-white w-full p-2 border border-[#cb0c4f] rounded-md"
+            placeholder="Apellido"
+            className={inputsStyle}
             required
-            minLength={3}
-            maxLength={12}
           />
           {errors.apellido && (
             <p className="text-red-500 text-sm">{errors.apellido}</p>
           )}
-        </div>
 
-        <div>
-          <label
-            htmlFor="email"
-            className="block sm:text-xl  font-semibold text-gray-700"
-          >
-            Email:
-          </label>
           <input
             type="email"
             id="email"
             name="email"
             value={formValues.email}
             onChange={handleChange}
-            className="mt-1 block text-black bg-white w-full p-2 border border-[#cb0c4f] rounded-md"
+            placeholder="Correo"
+            className={inputsStyle}
             required
           />
           {errors.email && (
             <p className="text-red-500 text-sm">{errors.email}</p>
           )}
-        </div>
 
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label
-              htmlFor="password"
-              className="block sm:text-xl  font-semibold text-gray-700"
-            >
-              Contraseña:
-            </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={formValues.password}
-              onChange={handleChange}
-              className="mt-1 block text-black bg-white w-full p-2 border border-[#cb0c4f] rounded-md"
-              required
-              minLength={6}
-            />
-            {errors.password && (
-              <p className="text-red-500 text-sm">{errors.password}</p>
-            )}
-          </div>
-          <div>
-            <label
-              htmlFor="confirmPassword"
-              className="block sm:text-xl  text-nowrap font-semibold text-gray-700"
-            >
-              Repetir Contraseña:
-            </label>
-            <input
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              value={formValues.confirmPassword}
-              onChange={handleChange}
-              className="mt-1 block text-black bg-white w-full p-2 border border-[#cb0c4f] rounded-md"
-              required
-            />
-            {errors.confirmPassword && (
-              <p className="text-red-500 text-sm">{errors.confirmPassword}</p>
-            )}
-          </div>
-        </div>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            value={formValues.password}
+            onChange={handleChange}
+            placeholder="Contraseña"
+            className={inputsStyle}
+            required
+          />
+          {errors.password && (
+            <p className="text-red-500 text-sm">{errors.password}</p>
+          )}
 
-        <div>
-          <label
-            htmlFor="dni"
-            className="block sm:text-xl  font-semibold text-gray-700"
-          >
-            DNI:
-          </label>
+          <input
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            value={formValues.confirmPassword}
+            onChange={handleChange}
+            placeholder="Repetir Contraseña"
+            className={inputsStyle}
+            required
+          />
+          {errors.confirmPassword && (
+            <p className="text-red-500 text-sm">{errors.confirmPassword}</p>
+          )}
+
           <input
             type="text"
             id="DNI"
             name="DNI"
             value={formValues.DNI}
             onChange={handleChange}
-            className="mt-1 block text-black bg-white w-full p-2 border border-[#cb0c4f] rounded-md"
+            placeholder="DNI"
+            className={inputsStyle}
             required
           />
           {errors.DNI && <p className="text-red-500 text-sm">{errors.DNI}</p>}
-        </div>
 
-        <div>
-          <label
-            htmlFor="phoneNumber"
-            className="block sm:text-xl  font-semibold text-gray-700"
-          >
-            Número de Teléfono:
-          </label>
           <input
             type="text"
             id="celular"
             name="celular"
             value={formValues.celular}
             onChange={handleChange}
-            className="mt-1 block text-black bg-white w-full p-2 border border-[#cb0c4f] rounded-md"
+            placeholder="Número de Teléfono"
+            className={inputsStyle}
             required
           />
           {errors.celular && (
             <p className="text-red-500 text-sm">{errors.celular}</p>
           )}
-        </div>
 
-        <button
-          type="submit"
-          className="w-full py-2 px-4 bg-green-700 text-white font-semibold rounded-md hover:bg-green-900"
-        >
-          Registrarse
-        </button>
+          {/* Nuevo select para elegir rol */}
+          <select
+            name="userType"
+            value={formValues.userType}
+            onChange={handleChange}
+            className={inputsStyle}
+            required
+          >
+            <option value="cliente">Cliente</option>
+            <option value="profesional">Profesional</option>
+          </select>
+          {errors.userType && (
+            <p className="text-red-500 text-sm">{errors.userType}</p>
+          )}
+
+          <button
+            type="submit"
+            className="w-full h-10 bg-[#cb0c4f] rounded-3xl text-base text-white font-semibold transition-transform transform hover:scale-105 hover:shadow-lg"
+          >
+            Registrarse
+          </button>
+        </section>
       </form>
-    </div>
+    </main>
   );
 };
 

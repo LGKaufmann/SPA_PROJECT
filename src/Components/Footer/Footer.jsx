@@ -19,7 +19,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-gradient-to-l from-[#ffffff] to-[#cb0c4f] text-white py-8 relative">
+    <footer className="bg-gradient-to-r from-[#E486A7] to-[#79B250] text-white py-8 relative">
       <div className="container mx-auto text-center flex flex-col items-center">
         <p className="text-lg mb-4">
           &copy; {new Date().getFullYear()} Spa Sentirse Bien. Todos los

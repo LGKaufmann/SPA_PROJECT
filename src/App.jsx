@@ -17,13 +17,18 @@ import { LoginPersonal } from "./Components/Login/LoginPersonal";
 import LandingAdmin from "./Components/Landing/LandingAdmin";
 import Opiniones from "./Components/Opiniones/Opiniones";
 import { ProtectedRoutes } from "./Components/ProtectedRoutes/ProtectedRoutes";
+import ListadoClientes from "./Components/Admin/ListadoClientes";
+import ListadoClientesPorDia from "./Components/Admin/ListadoClientesPorDia";
+import ListadoClientesPorProfesional from "./Components/Admin/ListadoClientesPorProfesional";
 
 function App() {
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
 
   useEffect(() => {
-    const tokenRef = { current: token }; // Referencia mutable
+    const tokenRef = { current: token };
+    console.log(tokenRef);
+    // Referencia mutable
     if (tokenRef?.current) {
       dispatch(fetchUserData(tokenRef?.current));
     }
@@ -45,6 +50,30 @@ function App() {
                 <ProtectedRoutes>
                   {" "}
                   <Landing />{" "}
+                </ProtectedRoutes>
+              }
+            />
+            <Route
+              path="/listadoClientes"
+              element={
+                <ProtectedRoutes>
+                  <ListadoClientes />
+                </ProtectedRoutes>
+              }
+            />
+            <Route
+              path="/listadoClientesDia"
+              element={
+                <ProtectedRoutes>
+                  <ListadoClientesPorDia />
+                </ProtectedRoutes>
+              }
+            />
+            <Route
+              path="/listadoClientesProfesional"
+              element={
+                <ProtectedRoutes>
+                  <ListadoClientesPorProfesional />
                 </ProtectedRoutes>
               }
             />

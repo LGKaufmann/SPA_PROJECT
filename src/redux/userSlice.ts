@@ -2,12 +2,14 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface UserState {
   user: any | null;
+  profesionales: string[];
   token: string | null;
   loading: boolean;
 }
 
 const initialState: UserState = {
   user: null,
+  profesionales: [],
   token: localStorage.getItem("token") || null,
   loading: false,
 };
@@ -18,6 +20,9 @@ const userSlice = createSlice({
   reducers: {
     userData: (state, action) => {
       state.user = action.payload;
+    },
+    profesionales: (state, action) => {
+      state.profesionales = action.payload;
     },
     login: (state, action) => {
       state.token = action.payload.token;
@@ -39,5 +44,5 @@ const userSlice = createSlice({
 
 export default userSlice;
 
-export const { login, logout, setLoading, register, userData } =
+export const { login, logout, setLoading, register, userData, profesionales } =
   userSlice.actions;

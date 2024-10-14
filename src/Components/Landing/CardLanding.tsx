@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css"; // Asegúrate de importar los estilos por defecto del calendario.
+import "react-calendar/dist/Calendar.css";
 import { useDispatch, useSelector } from "react-redux";
-import { crearTurno } from "../../redux/servicesAction";
+import { crearTurno } from "../../redux/servicesAction"; // Asegúrate de importar la acción para crear un turno
+import { obtenerProfesionales } from "../../redux/userAction";
 
 interface ICard {
   id: string;
@@ -14,10 +15,16 @@ interface ICard {
 const CardLanding: React.FC<ICard> = ({ id, nombre, descripcion, precio }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state: any) => state.users);
+  const { profesionales } = useSelector((state: any) => state.users); // Obtener la lista de profesionales del estado
   const [date, setDate] = useState(new Date());
   const [time, setTime] = useState("");
+  const [selectedProfesional, setSelectedProfesional] = useState(""); // Nuevo estado para el profesional seleccionado
   const [isFormVisible, setIsFormVisible] = useState(false);
   const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    dispatch<any>(obtenerProfesionales()); // Cargar la lista de profesionales cuando el componente se monta
+  }, [dispatch]);
 
   const handleDateChange = (newDate) => {
     setDate(newDate);
@@ -27,85 +34,132 @@ const CardLanding: React.FC<ICard> = ({ id, nombre, descripcion, precio }) => {
     setTime(e.target.value);
   };
 
+  const handleProfesionalChange = (e) => {
+    setSelectedProfesional(e.target.value); // Cambiar el profesional seleccionado
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("entra");
 
     const turnoData = {
       servicioId: id,
       fecha: date,
       time: time,
+      profesionalId: selectedProfesional, // Aquí se envía el ID del profesional
     };
+    console.log(turnoData); // Para depuración
 
-    dispatch<any>(crearTurno(turnoData, token as string));
-
+    // Llama a la acción para crear el turno
+    await dispatch<any>(crearTurno(turnoData, token as string));
     setIsFormVisible(false);
+    setSelectedProfesional(""); // Resetear la selección del profesional
   };
 
   const handleReserve = () => {
-    setIsFormVisible(true); // Mostrar el formulario al hacer clic en "Reservar"
+    setIsFormVisible(true);
   };
+
   return (
     <div
       id={id}
-      className="bg-white rounded-lg shadow-lg p-8 hover:shadow-2xl transition-shadow transform hover:scale-105"
+      className="border-2 border-[#cb0c4f] backdrop-blur-lg bg-white bg-opacity-30 rounded-lg p-8 hover:shadow-2xl transition-transform transform hover:scale-105 shadow-lg"
     >
-      <h2 className="text-3xl font-bold text-[#cb0c4f] mb-4">{nombre}</h2>
-      <p className="text-gray-600 mb-6 leading-relaxed">{descripcion}</p>
-      <p className="text-gray-600 mb-6 leading-relaxed text-xl">
+      <h2
+        className="text-3xl font-bold mb-4"
+        style={{ fontFamily: "Lato, sans-serif", color: "#cb0c4f" }}
+      >
+        {nombre}
+      </h2>
+      <p
+        className="text-gray-600 mb-6 leading-relaxed"
+        style={{ fontFamily: "Lato, sans-serif" }}
+      >
+        {descripcion}
+      </p>
+      <p
+        className="text-gray-600 mb-6 leading-relaxed text-xl"
+        style={{ fontFamily: "Lato, sans-serif" }}
+      >
         Precio: ${precio}
       </p>
       {isFormVisible && (
-        <>
-          <form
-            onSubmit={handleSubmit}
-            className="bg-gray-100 p-6 rounded-lg shadow-lg"
-          >
-            <div className="mb-4">
-              <label
-                htmlFor="calendar"
-                className="block text-lg font-medium text-gray-700 mb-2"
-              >
-                Selecciona la Fecha:
-              </label>
-              <Calendar
-                onChange={handleDateChange}
-                value={date}
-                className="custom-calendar w-full max-w-md mx-auto"
-              />
-            </div>
+        <form
+          onSubmit={handleSubmit}
+          className="bg-gray-100 p-6 rounded-lg shadow-lg"
+        >
+          <div className="mb-4">
+            <label
+              htmlFor="calendar"
+              className="block text-lg font-medium text-gray-700 mb-2"
+              style={{ fontFamily: "Lato, sans-serif" }}
+            >
+              Selecciona la Fecha:
+            </label>
+            <Calendar
+              onChange={handleDateChange}
+              value={date}
+              className="custom-calendar w-full max-w-md mx-auto"
+            />
+          </div>
 
-            <div className="mb-4">
-              <label
-                htmlFor="time"
-                className="block text-lg font-medium text-gray-700 mb-2"
-              >
-                Selecciona la Hora:
-              </label>
-              <input
-                type="time"
-                id="time"
-                value={time}
-                onChange={handleTimeChange}
-                className="form-input w-full p-2 border bg-white text-black border-gray-300 rounded-lg"
-              />
-            </div>
-            <div className="flex justify-center items-center gap-x-2">
-              <button
-                type="submit"
-                className="bg-[#cb0c4f] text-white px-6 py-3 rounded-lg shadow-md hover:bg-green-700 transition duration-300"
-              >
-                Guardar cambios
-              </button>
-              <button
-                onClick={() => setIsFormVisible(false)}
-                className="bg-[#cb0c4f] text-white px-6 py-3 rounded-lg shadow-md hover:bg-green-700 transition duration-300"
-              >
-                Cancelar
-              </button>
-            </div>
-          </form>
-        </>
+          <div className="mb-4">
+            <label
+              htmlFor="time"
+              className="block text-lg font-medium text-gray-700 mb-2"
+              style={{ fontFamily: "Lato, sans-serif" }}
+            >
+              Selecciona la Hora:
+            </label>
+            <input
+              type="time"
+              id="time"
+              value={time}
+              onChange={handleTimeChange}
+              className="form-input w-full p-2 border bg-white text-black border-gray-300 rounded-lg"
+            />
+          </div>
+
+          <div className="mb-4">
+            <label
+              htmlFor="profesional"
+              className="block text-lg font-medium text-gray-700 mb-2"
+              style={{ fontFamily: "Lato, sans-serif" }}
+            >
+              Selecciona un Profesional:
+            </label>
+            <select
+              id="profesional"
+              value={selectedProfesional}
+              onChange={handleProfesionalChange}
+              className="form-select w-full p-2 border bg-white text-black border-gray-300 rounded-lg"
+              required
+            >
+              <option value="" disabled>
+                Selecciona un profesional
+              </option>
+              {profesionales.map((profesional) => (
+                <option key={profesional._id} value={profesional._id}>
+                  {profesional.nombre} {profesional.apellido}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="flex justify-center items-center gap-x-2">
+            <button
+              type="submit"
+              className="bg-[#cb0c4f] text-white px-6 py-3 rounded-lg shadow-md hover:bg-green-700 transition duration-300"
+            >
+              Guardar cambios
+            </button>
+            <button
+              onClick={() => setIsFormVisible(false)}
+              className="bg-[#cb0c4f] text-white px-6 py-3 rounded-lg shadow-md hover:bg-green-700 transition duration-300"
+            >
+              Cancelar
+            </button>
+          </div>
+        </form>
       )}
       {!isFormVisible && (
         <button

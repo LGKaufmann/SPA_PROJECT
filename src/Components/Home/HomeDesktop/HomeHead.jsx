@@ -1,33 +1,40 @@
-import Banner from "/assets/banner.svg";
+import Banner from "/assets/banner.jpg";
 
 const HomeHead = () => {
   return (
-    <div className="grid grid-cols-2 bg-gradient-to-l from-green-900 to-[#ffff] min-h-full min-w-full text-left justify-center ">
-      <div className="text-[#cb0c4f] tracking-wider mx-auto h-fit my-[20%] flex flex-col">
-        <div className="text-lg flex flex-row text-left mr-auto ml-[25%]">
-          Bienvenidos a
-        </div>
-        <div className="font-bold text-4xl flex flex-row text-left mr-auto ml-[25%]">
+    <div className="relative min-h-screen flex justify-center items-center">
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+        style={{ backgroundImage: `url(${Banner})` }}
+      >
+        <div className="w-full h-full bg-black opacity-45" />{" "}
+        {/* Opacidad ajustada aquí */}
+      </div>
+      <div className="relative z-10 p-10 rounded-lg mx-auto h-fit w-3/4 md:w-1/2 text-center">
+        <div
+          className="mb-2"
+          style={{
+            fontFamily: "'Playball', cursive", // Cambiado a Playball
+            fontWeight: "700", // Este peso debería estar disponible para Playball
+            fontSize: "3.5rem", // Tamaño ajustado para mayor legibilidad
+            color: "#cb0c4f",
+            // textShadow: "0 0 10px rgba(255, 255, 255, 0.3)", // Brillo eliminado
+          }}
+        >
           SPA SENTIRSE BIEN
         </div>
-        <div className="flex flex-row  w-fit gap-2 items-center text-left mr-auto ml-[25%]">
-          <div className="text-2xl ">De la</div>
-          <div className="font-bold text-4xl">Dra. Ana Felicidad</div>
+        <div
+          className="mb-4"
+          style={{
+            fontFamily: "'Playball', cursive", // Cambiado a Playball
+            fontWeight: "400", // Este peso debería estar disponible para Playball
+            fontSize: "1.8rem", // Tamaño ajustado para mayor legibilidad
+            color: "#cb0c4f",
+            // textShadow: "0 0 10px rgba(255, 255, 255, 0.5)", // Brillo eliminado
+          }}
+        >
+          Tu lugar de paz y rejuvenecimiento
         </div>
-        <div className="py-5 px-20 text-center my-[10%] mx-[15%] border border-dashed border-[#cb0c4f] border-y-2 border-x-0 font-light text-lg">
-          Plataforma especializada en{" "}
-          <b className="font-bold text-lg">servicios de SPA</b>, diseñada para
-          conectar a <b className="font-bold text-lg">los clientes</b> y futuros
-          clientes con una amplia gama de servicios profesionales de SPA, desde
-          Masajes hasta Belleza y Tratamientos Faciales.
-        </div>
-      </div>
-      <div className="max-w-[860px]">
-        <img
-          src={Banner}
-          alt="Image Landing Desktop"
-          className="mask-image object-cover w-[100%] xl:max-w-[950px] h-[100%] xl:max-h-[1000px] float-right"
-        />
       </div>
     </div>
   );

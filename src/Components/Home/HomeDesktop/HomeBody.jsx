@@ -1,56 +1,145 @@
 import { Link } from "react-router-dom";
-import SPA from "/assets/spa.svg";
+import SPA from "/assets/spa.jpg";
+import SPA2 from "/assets/spa2.jpg";
 
 export const HomeBody = () => {
   return (
-    <div className="flex flex-col">
-      <div className="flex flex-row w-full h-[700px]">
-        <img
-          src={SPA}
-          alt="Banner Desktop"
-          className="object-cover w-[28%] max-w-[629px] h-[85%] max-h-[694px] float-left"
-        />
-        <div className="flex flex-col mx-6 my-28 max-w-screen justify-left">
-          <span className="text-[#cb0c4f] text-2xl mb-5 font-medium font-['Inter'] uppercase tracking-wide">
-            <b className="font-extrabold">Conoce más</b> de nosotros
-          </span>
-          <p className="text-wrap text-[#cb0c4f] text-lg mb-5">
-            En nuestro spa, ofrecemos una variedad de tratamientos diseñados
-            para tu <b className="text-xl">bienestar y belleza</b>.
-          </p>
-          <p className="text-wrap text-[#cb0c4f] text-lg mb-5">
-            Nuestros masajes incluyen opciones anti-estrés, descontracturantes,
-            con piedras calientes y circulatorios, todos diseñados para aliviar
-            tensiones y revitalizar tu cuerpo.
-          </p>
-          <p className="text-wrap text-[#cb0c4f] text-lg mb-5">
-            En belleza, realizamos lifting de pestañas, depilación facial y
-            tratamientos para manos y pies que garantizan un cuidado completo y
-            radiante. Nuestros tratamientos faciales incluyen microexfoliación
-            con punta de diamante, limpieza profunda e hidratación, y
-            criofrecuencia para un efecto lifting instantáneo. Para el cuerpo,
-            ofrecemos VelaSlim para reducir la circunferencia y combatir la
-            celulitis, DermoHealth para estimular la microcirculación,
-            criofrecuencia para reafirmar la piel, y ultracavitación para la
-            reducción de grasa
-            <b>
-              Ven a nuestro spa y disfruta de una experiencia de alta calidad
-              adaptada a tus necesidades.
-            </b>
-          </p>
-          <Link
-            to="/opiniones"
-            className="text-[#cb0c4f] text-center text-xl font-extrabold hover:text-gray-300 hover:underline"
-          >
-            Conoce las opiniones de la página
-          </Link>
-          <p className="items-center text-[#cb0c4f] self-center text-center font-light text-2xl text-wrap mx-[15%] my-5">
-            <b className="font-extrabold">Únase a nosotros</b> en este viaje
-            hacia{" "}
-            <b className="font-extrabold">
-              un futuro más saludable y eficiente
-            </b>
-          </p>
+    <div className="flex flex-col py-12 bg-gradient-to-b from-[#f8f9fa] to-[#e9ecef]">
+      <div className="bg-white bg-opacity-90 shadow-2xl p-6 rounded-3xl w-full mx-auto flex flex-col lg:flex-row items-center">
+        <div className="relative w-full lg:w-[40%] mb-8 lg:mb-0 lg:mr-12">
+          <div className="flex flex-col items-center relative">
+            <img
+              src={SPA}
+              alt="Banner Spa"
+              className="w-[90%] h-[300px] object-cover rounded-lg shadow-lg transition-transform transform hover:scale-105 mb-6"
+            />
+            <img
+              src={SPA2}
+              alt="Banner Spa 2"
+              className="w-[85%] h-[250px] object-cover rounded-lg shadow-lg transition-transform transform hover:scale-105 mt-[-50px]"
+            />
+          </div>
+        </div>
+
+        <div className="flex flex-col items-center lg:items-start lg:max-w-[60%]">
+          <div className="bg-[#ffffff] bg-opacity-90 border-2 border-[#ffb3c1] shadow-md p-8 rounded-lg w-full">
+            {" "}
+            {/* Aumenté el padding a p-8 */}
+            <h2
+              className="text-[#cb0c4f] text-center text-4xl font-bold mb-4 uppercase tracking-wide"
+              style={{ fontFamily: "'Lato', sans-serif" }}
+            >
+              <b>Conoce más</b> de nosotros
+            </h2>
+            <p
+              className="text-center text-[#333] text-lg mb-4 leading-relaxed px-5"
+              style={{ fontFamily: "'Lato', sans-serif" }}
+            >
+              En nuestro{" "}
+              <b
+                className="text-xl text-[#cb0c4f] font-semibold"
+                style={{ fontFamily: "'Lato', sans-serif" }}
+              >
+                spa
+              </b>
+              , ofrecemos una{" "}
+              <b
+                className="text-xl text-[#cb0c4f] font-semibold"
+                style={{ fontFamily: "'Lato', sans-serif" }}
+              >
+                variedad de tratamientos
+              </b>{" "}
+              diseñados para tu{" "}
+              <b
+                className="text-xl text-[#cb0c4f] font-semibold"
+                style={{ fontFamily: "'Lato', sans-serif" }}
+              >
+                bienestar
+              </b>{" "}
+              y{" "}
+              <b
+                className="text-xl text-[#cb0c4f] font-semibold"
+                style={{ fontFamily: "'Lato', sans-serif" }}
+              >
+                belleza
+              </b>
+              .
+            </p>
+            <p
+              className="text-center text-[#333] text-lg mb-4 leading-relaxed px-5"
+              style={{ fontFamily: "'Lato', sans-serif" }}
+            >
+              Disfruta de{" "}
+              <b
+                className="text-xl text-[#cb0c4f] font-semibold"
+                style={{ fontFamily: "'Lato', sans-serif" }}
+              >
+                masajes anti-estrés
+              </b>
+              ,{" "}
+              <b
+                className="text-xl text-[#cb0c4f] font-semibold"
+                style={{ fontFamily: "'Lato', sans-serif" }}
+              >
+                descontracturantes
+              </b>
+              , con{" "}
+              <b
+                className="text-xl text-[#cb0c4f] font-semibold"
+                style={{ fontFamily: "'Lato', sans-serif" }}
+              >
+                piedras calientes
+              </b>{" "}
+              y más, perfectos para{" "}
+              <b
+                className="text-xl text-[#cb0c4f] font-semibold"
+                style={{ fontFamily: "'Lato', sans-serif" }}
+              >
+                revitalizarte
+              </b>
+              .
+            </p>
+            <p
+              className="text-center text-[#333] text-lg mb-4 leading-relaxed px-5"
+              style={{ fontFamily: "'Lato', sans-serif" }}
+            >
+              ¡Ven a{" "}
+              <b
+                className="text-xl text-[#cb0c4f] font-semibold"
+                style={{ fontFamily: "'Lato', sans-serif" }}
+              >
+                vivir una experiencia
+              </b>{" "}
+              de{" "}
+              <b
+                className="text-xl text-[#cb0c4f] font-semibold"
+                style={{ fontFamily: "'Lato', sans-serif" }}
+              >
+                bienestar
+              </b>{" "}
+              hecha a tu medida!
+            </p>
+            <p
+              className="text-center text-[#333] font-light text-2xl mb-8 leading-relaxed px-5"
+              style={{ fontFamily: "'Lato', sans-serif" }}
+            >
+              <b className="font-normal text-[#cb0c4f]">Únete a nosotros</b> en
+              este viaje hacia{" "}
+              <b className="font-normal text-[#cb0c4f]">
+                un futuro más saludable y eficiente
+              </b>
+              .
+            </p>
+            <div className="text-center mt-6">
+              <Link
+                to="/opiniones"
+                className="bg-[#cb0c4f] text-white text-lg font-semibold py-3 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105 hover:bg-[#38AD26]"
+              >
+                Conoce las opiniones de nuestros{" "}
+                <b className="font-semibold">clientes</b>
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </div>
