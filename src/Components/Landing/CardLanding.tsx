@@ -41,9 +41,12 @@ const CardLanding: React.FC<ICard> = ({ id, nombre, descripcion, precio }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Convertir la fecha a un formato plano YYYY-MM-DD
+    const fechaPlano = date.toISOString().split("T")[0]; // Esto extrae solo la parte de la fecha
+
     const turnoData = {
       servicioId: id,
-      fecha: date,
+      fecha: fechaPlano, // Enviar solo la fecha en formato plano
       time: time,
       profesionalId: selectedProfesional, // Aquí se envía el ID del profesional
     };

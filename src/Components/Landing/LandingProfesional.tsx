@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import dayjs from "dayjs"; // Biblioteca para manejo de fechas
-import Whatsapp from "../../../public/assets/Whatsapp.svg";
+import Whatsapp from "../../../public/assets/WhatsApp.svg";
+
+import { useSelector } from "react-redux";
 
 interface ITurno {
   _id: string;
@@ -18,6 +19,7 @@ interface ITurno {
     dni: string;
     email: string;
     celular: string;
+    _id: string; // Asegúrate de que tenga el campo id del profesional
   };
   servicio: {
     nombre: string;
@@ -28,97 +30,48 @@ interface ITurno {
   hora: string;
 }
 
-const ListadoClientesPorDia: React.FC = () => {
+const LandingProfesional: React.FC = () => {
   const [turnos, setTurnos] = useState<ITurno[]>([]);
-  const [fechaSeleccionada, setFechaSeleccionada] = useState<string>(""); // Estado para la fecha seleccionada
-  const [servicioSeleccionado, setServicioSeleccionado] = useState<string>(""); // Estado para el servicio seleccionado
-  const [servicios, setServicios] = useState<string[]>([]); // Lista de servicios únicos para el filtro
+  const { user } = useSelector((state: any) => state.users); // Obtenemos los datos del profesional logueado
 
   useEffect(() => {
     const fetchTurnos = async () => {
       try {
         const response = await axios.get("/servicios/turnos");
-        setTurnos(response.data);
-
-        // Extraer servicios únicos para los filtros
-        const serviciosUnicos = [
-          ...new Set(
-            response.data.map((turno: ITurno) => turno.servicio.nombre)
-          ),
-        ];
-        setServicios(serviciosUnicos as string[]);
+        const turnosProfesional = response.data.filter(
+          (turno: ITurno) => turno.profesional._id === user._id // Filtramos los turnos que coincidan con el ID del profesional logueado
+        );
+        setTurnos(turnosProfesional);
       } catch (error) {
         console.error("Error al obtener los turnos:", error);
       }
     };
 
-    fetchTurnos();
-  }, []);
-
-  // Filtrar los turnos según fecha y servicio
-  const turnosFiltrados = turnos.filter((turno) => {
-    const coincideFecha = fechaSeleccionada
-      ? dayjs(turno.fecha).isSame(fechaSeleccionada, "day")
-      : true;
-    const coincideServicio = servicioSeleccionado
-      ? turno.servicio.nombre === servicioSeleccionado
-      : true;
-    return coincideFecha && coincideServicio;
-  });
+    if (user?._id) {
+      fetchTurnos();
+    }
+  }, [user]);
 
   return (
-    <div className="min-h-screen flex flex-col items-center bg-gradient-to-b from-green-700 to-[#cb0c4f] p-6 rounded-lg shadow-lg">
-      <h2 className="text-2xl font-semibold text-white mb-6">
-        Listado de Clientes por Día
-      </h2>
-
-      {/* Filtros */}
-      <div className="flex space-x-4 mb-6">
-        {/* Filtro de fecha */}
-        <div>
-          <label className="block text-gray-700 font-semibold mb-2">
-            Fecha:
-          </label>
-          <input
-            type="date"
-            value={fechaSeleccionada}
-            onChange={(e) => setFechaSeleccionada(e.target.value)}
-            className="border border-gray-300 rounded-lg p-2"
-          />
-        </div>
-
-        {/* Filtro de servicio */}
-        <div>
-          <label className="block text-gray-700 font-semibold mb-2">
-            Servicio:
-          </label>
-          <select
-            value={servicioSeleccionado}
-            onChange={(e) => setServicioSeleccionado(e.target.value)}
-            className="border border-gray-300 rounded-lg p-2"
-          >
-            <option value="">Todos los servicios</option>
-            {servicios.map((servicio) => (
-              <option key={servicio} value={servicio}>
-                {servicio}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
-
-      {/* Tabla de resultados */}
-      {turnosFiltrados.length === 0 ? (
-        <p className="text-white">
-          No hay turnos para la fecha o servicio seleccionados.
-        </p>
-      ) : (
+    <div className="min-h-screen flex">
+      {/* Contenido principal */}
+      <div className="flex-1 bg-gradient-to-r from-green-700 to-[#cb0c4f] p-8">
+        <header className="text-center mb-12">
+          <h1 className="text-4xl font-bold text-white mb-4 drop-shadow-lg">
+            Bienvenido, {user?.nombre + " " + user?.apellido}!
+          </h1>
+          <p className="text-xl text-white font-light">
+            Aquí puedes ver todos tus turnos reservados.
+          </p>
+        </header>
         <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-lg p-6">
-          {turnosFiltrados.length === 0 ? (
-            <p className="text-center text-white">No hay turnos registrados.</p>
+          {turnos.length === 0 ? (
+            <p className="text-center text-gray-600">
+              No hay turnos registrados.
+            </p>
           ) : (
             <div className="space-y-6">
-              {turnosFiltrados.map((turno) => (
+              {turnos.map((turno) => (
                 <div
                   key={turno._id}
                   className="relative bg-gray-100 p-6 rounded-lg shadow-md border border-gray-300"
@@ -169,18 +122,14 @@ const ListadoClientesPorDia: React.FC = () => {
                     <span className="font-semibold">Servicio:</span>{" "}
                     {turno?.servicio?.descripcion} - ${turno.servicio.precio}
                   </p>
-                  <p className="text-gray-700 mb-2">
-                    <span className="font-semibold">Profesional:</span>{" "}
-                    {turno?.profesional?.nombre} {turno.profesional.apellido}
-                  </p>
                 </div>
               ))}
             </div>
           )}
         </div>
-      )}
+      </div>
     </div>
   );
 };
 
-export default ListadoClientesPorDia;
+export default LandingProfesional;

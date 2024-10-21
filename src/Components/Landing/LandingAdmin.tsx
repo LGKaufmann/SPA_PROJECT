@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Whatsapp from "../../../public/assets/WhatsApp.svg";
-import SidebarAdmin from "./SidebarAdmin"; // Importa el componente de la sidebar
-import { useSelector } from "react-redux";
+import SidebarAdmin from "./SidebarAdmin";
 
 interface ITurno {
   _id: string;
@@ -25,14 +24,13 @@ interface ITurno {
     descripcion: string;
     precio: number;
   };
-
   fecha: string;
   hora: string;
 }
 
 const LandingAdmin: React.FC = () => {
   const [turnos, setTurnos] = useState<ITurno[]>([]);
-  console.log(turnos);
+  const [sidebarVisible, setSidebarVisible] = useState<boolean>(true); // Estado para la barra lateral
 
   useEffect(() => {
     const fetchTurnos = async () => {
@@ -47,13 +45,30 @@ const LandingAdmin: React.FC = () => {
     fetchTurnos();
   }, []);
 
+  const toggleSidebar = () => {
+    setSidebarVisible((prev) => !prev); // Alternar la visibilidad de la barra lateral
+  };
+
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-screen flex items-start bg-green-700">
+      {/* Botón para alternar la barra lateral */}
+      <button
+        onClick={toggleSidebar}
+        className="p-2 bg-green-700 text-white rounded"
+        aria-label="Toggle Sidebar"
+      >
+        &#9776; {/* Icono de tres líneas */}
+      </button>
+
       {/* Sidebar */}
-      <SidebarAdmin />
+      {sidebarVisible && <SidebarAdmin />}
 
       {/* Contenido principal */}
-      <div className="flex-1 bg-gradient-to-r from-green-700 to-[#cb0c4f] p-8">
+      <div
+        className={`flex-1 ${
+          sidebarVisible ? "ml-24" : "ml-0"
+        } bg-gradient-to-r from-green-700 to-[#cb0c4f] p-8 transition-all duration-300`}
+      >
         <header className="text-center mb-12">
           <h1 className="text-4xl font-bold text-white mb-4 drop-shadow-lg">
             Bienvenido, Administrador!
@@ -99,7 +114,7 @@ const LandingAdmin: React.FC = () => {
                   </p>
                   <p className="text-gray-700 mb-2">
                     <span className="font-semibold">DNI:</span>{" "}
-                    {turno?.usuario?.DNI}
+                    {turno?.usuario?.dni}
                   </p>
                   <p className="text-gray-700 mb-2">
                     <span className="font-semibold">Email:</span>{" "}

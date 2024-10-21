@@ -74,7 +74,7 @@ const ListadoClientes: React.FC = () => {
                   {cliente.apellido}
                 </td>
                 <td className="px-6 py-4 border-b border-gray-200 text-gray-700">
-                  {cliente.dni}
+                  {cliente.DNI}
                 </td>
                 <td className="px-6 py-4 border-b border-gray-200 text-gray-700">
                   {cliente.email}

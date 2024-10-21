@@ -17,7 +17,8 @@ const Navbar = () => {
     location.pathname === "/" ||
     location.pathname === "/registro" ||
     location.pathname === "/loginPersonal" ||
-    location.pathname === "/login";
+    location.pathname === "/login" ||
+    location.pathname === "/loginProfesional";
 
   const handleLogout = () => {
     dispatch(logoutUser());
@@ -78,7 +79,7 @@ const Navbar = () => {
                 style={iconColorStyle}
               />
             </a>
-            <div className="flex gap-x-3 ml-4">
+            <div className="flex items-center gap-x-3 ml-4">
               <Link to="/login">
                 <button className="bg-[#cb0c4f] text-white font-semibold py-2 px-4 rounded transition-transform transform hover:scale-105 hover:shadow-lg">
                   Iniciar Sesión
@@ -88,6 +89,11 @@ const Navbar = () => {
                 <button className="bg-[#cb0c4f] text-white font-semibold py-2 px-4 rounded transition-transform transform hover:scale-105 hover:shadow-lg">
                   Registro
                 </button>
+              </Link>
+              <Link to="/loginProfesional">
+                <span className="bg-[#cb0c4f] text-white font-semibold py-2 px-4 rounded transition-transform transform hover:scale-105 hover:shadow-lg">
+                  soy profesional
+                </span>
               </Link>
             </div>
           </div>

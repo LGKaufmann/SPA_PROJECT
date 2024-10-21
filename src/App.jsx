@@ -20,17 +20,17 @@ import { ProtectedRoutes } from "./Components/ProtectedRoutes/ProtectedRoutes";
 import ListadoClientes from "./Components/Admin/ListadoClientes";
 import ListadoClientesPorDia from "./Components/Admin/ListadoClientesPorDia";
 import ListadoClientesPorProfesional from "./Components/Admin/ListadoClientesPorProfesional";
+import LoginProfesionales from "./Components/Login/LoginProfesionales";
+import LandingProfesional from "./Components/Landing/LandingProfesional";
+import ReportForm from "./Components/Landing/ReportForm";
 
 function App() {
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
 
   useEffect(() => {
-    const tokenRef = { current: token };
-    console.log(tokenRef);
-    // Referencia mutable
-    if (tokenRef?.current) {
-      dispatch(fetchUserData(tokenRef?.current));
+    if (token) {
+      dispatch(fetchUserData(token));
     }
   }, [dispatch, token]);
 
@@ -44,6 +44,7 @@ function App() {
             <Route path="/registro" element={<Registro />} />
             <Route path="/login" element={<Login />} />
             <Route path="/loginPersonal" element={<LoginPersonal />} />
+            <Route path="/loginProfesional" element={<LoginProfesionales />} />
             <Route
               path="/home"
               element={
@@ -78,10 +79,26 @@ function App() {
               }
             />
             <Route
+              path="/informeServicios"
+              element={
+                <ProtectedRoutes>
+                  <ReportForm />
+                </ProtectedRoutes>
+              }
+            />
+            <Route
               path="/admin"
               element={
                 <ProtectedRoutes>
                   <LandingAdmin />
+                </ProtectedRoutes>
+              }
+            />
+            <Route
+              path="/homeProfesional"
+              element={
+                <ProtectedRoutes>
+                  <LandingProfesional />
                 </ProtectedRoutes>
               }
             />
