@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Whatsapp from "/assets/WhatsApp.svg";
+import Whatsapp from "/assets/Whatsapp.svg";
 import SidebarAdmin from "./SidebarAdmin";
 
 interface ITurno {
