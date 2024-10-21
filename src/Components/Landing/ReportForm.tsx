@@ -45,7 +45,7 @@ const ReportForm: React.FC = () => {
         },
       });
       setTurnos(response.data);
-    } catch (error) {
+    } catch (error: any) {
       if (error.response?.data?.message?.length > 0) {
         setSinTurnos(true);
       } else {

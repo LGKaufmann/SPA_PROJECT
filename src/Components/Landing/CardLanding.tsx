@@ -26,15 +26,15 @@ const CardLanding: React.FC<ICard> = ({ id, nombre, descripcion, precio }) => {
     dispatch<any>(obtenerProfesionales()); // Cargar la lista de profesionales cuando el componente se monta
   }, [dispatch]);
 
-  const handleDateChange = (newDate) => {
+  const handleDateChange = (newDate: any) => {
     setDate(newDate);
   };
 
-  const handleTimeChange = (e) => {
+  const handleTimeChange = (e: any) => {
     setTime(e.target.value);
   };
 
-  const handleProfesionalChange = (e) => {
+  const handleProfesionalChange = (e: any) => {
     setSelectedProfesional(e.target.value); // Cambiar el profesional seleccionado
   };
 
@@ -140,7 +140,7 @@ const CardLanding: React.FC<ICard> = ({ id, nombre, descripcion, precio }) => {
               <option value="" disabled>
                 Selecciona un profesional
               </option>
-              {profesionales.map((profesional) => (
+              {profesionales.map((profesional: any) => (
                 <option key={profesional._id} value={profesional._id}>
                   {profesional.nombre} {profesional.apellido}
                 </option>
