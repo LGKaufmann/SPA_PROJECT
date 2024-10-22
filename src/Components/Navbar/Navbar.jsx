@@ -18,7 +18,8 @@ const Navbar = () => {
     location.pathname === "/registro" ||
     location.pathname === "/loginPersonal" ||
     location.pathname === "/login" ||
-    location.pathname === "/loginProfesional";
+    location.pathname === "/loginProfesional" ||
+    location.pathname === "/loginSecretaria";
 
   const handleLogout = () => {
     dispatch(logoutUser());
@@ -41,6 +42,10 @@ const Navbar = () => {
                 ? "/"
                 : user?.email === "admin@gmail.com"
                 ? "/admin"
+                : user?.userType === "profesional"
+                ? "/homeProfesional"
+                : user?.userType === "secretaria"
+                ? "/homeSecretaria"
                 : "/home"
             }
           >
@@ -92,7 +97,12 @@ const Navbar = () => {
               </Link>
               <Link to="/loginProfesional">
                 <span className="bg-[#cb0c4f] text-white font-semibold py-2 px-4 rounded transition-transform transform hover:scale-105 hover:shadow-lg">
-                  soy profesional
+                  Soy profesional
+                </span>
+              </Link>
+              <Link to="/loginSecretaria">
+                <span className="bg-[#cb0c4f] text-white font-semibold py-2 px-4 rounded transition-transform transform hover:scale-105 hover:shadow-lg">
+                  Soy secretario/a
                 </span>
               </Link>
             </div>

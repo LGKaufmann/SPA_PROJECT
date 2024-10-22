@@ -45,6 +45,14 @@ const SidebarAdmin: React.FC = () => {
             Informe de servicios por profesional
           </a>
         </li>
+        <li>
+          <a
+            href="/informeIngresos"
+            className="hover:bg-blue-300 hover:text-white text-white p-2 block rounded transition duration-300 ease-in-out"
+          >
+            Informe de ingresos
+          </a>
+        </li>
       </ul>
     </div>
   );

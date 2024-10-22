@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { loginUser } from "../../redux/userAction";
+import { fetchUserData, loginUser } from "../../redux/userAction";
 import User from "/assets/user.svg";
 import { Spinner } from "../Spinner/Spinner";
 import background from "/assets/background.jpg"; // Importa la imagen de fondo
@@ -16,17 +16,23 @@ export const LoginPersonal = () => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { loading, token } = useSelector((state: any) => state.users);
-  const [user, setUser] = useState<LoginState>({
+  const { loading, token, user } = useSelector((state: any) => state.users);
+  const [userLocal, setUser] = useState<LoginState>({
     email: "",
     password: "",
   });
 
   useEffect(() => {
     if (token) {
-      navigate("/admin");
+      dispatch<any>(fetchUserData(token));
     }
   }, [token, navigate]);
+
+  useEffect(() => {
+    if (user && !loading) {
+      navigate("/admin");
+    }
+  }, [user, loading, navigate]);
 
   const inputsStyle =
     "h-12 w-full pl-6 rounded-3xl bg-white text-black shadow-inner shadow-gray-300 font-semibold text-lg placeholder:text-[#cb0c4f] placeholder:font-semibold";
@@ -38,7 +44,7 @@ export const LoginPersonal = () => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    dispatch<any>(loginUser(user));
+    dispatch<any>(loginUser(userLocal));
     resetForm();
   };
 

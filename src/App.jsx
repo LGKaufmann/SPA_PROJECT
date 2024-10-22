@@ -16,13 +16,21 @@ import { fetchUserData } from "./redux/userAction";
 import { LoginPersonal } from "./Components/Login/LoginPersonal";
 import LandingAdmin from "./Components/Landing/LandingAdmin";
 import Opiniones from "./Components/Opiniones/Opiniones";
-import { ProtectedRoutes } from "./Components/ProtectedRoutes/ProtectedRoutes";
+import {
+  ProtectedAdminRoute,
+  ProtectedProfessionalRoute,
+  ProtectedSecretaryRoute,
+} from "./Components/ProtectedRoutes/ProtectedRoutes";
 import ListadoClientes from "./Components/Admin/ListadoClientes";
 import ListadoClientesPorDia from "./Components/Admin/ListadoClientesPorDia";
 import ListadoClientesPorProfesional from "./Components/Admin/ListadoClientesPorProfesional";
 import LoginProfesionales from "./Components/Login/LoginProfesionales";
+import LoginSecretaria from "./Components/Login/LoginSecretaria";
 import LandingProfesional from "./Components/Landing/LandingProfesional";
+import LandingSecretaria from "./Components/Landing/LandingSecretaria";
+import RegistrarPago from "./Components/Landing/RegistrarPago";
 import ReportForm from "./Components/Landing/ReportForm";
+import ReportIngresos from "./Components/Landing/ReportIngresos";
 
 function App() {
   const dispatch = useDispatch();
@@ -45,95 +53,77 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/loginPersonal" element={<LoginPersonal />} />
             <Route path="/loginProfesional" element={<LoginProfesionales />} />
-            <Route
-              path="/home"
-              element={
-                <ProtectedRoutes>
-                  {" "}
-                  <Landing />{" "}
-                </ProtectedRoutes>
-              }
-            />
+            <Route path="/loginSecretaria" element={<LoginSecretaria />} />
+            <Route path="/home" element={<Landing />} />
             <Route
               path="/listadoClientes"
               element={
-                <ProtectedRoutes>
+                <ProtectedAdminRoute>
                   <ListadoClientes />
-                </ProtectedRoutes>
+                </ProtectedAdminRoute>
               }
             />
             <Route
               path="/listadoClientesDia"
               element={
-                <ProtectedRoutes>
+                <ProtectedAdminRoute>
                   <ListadoClientesPorDia />
-                </ProtectedRoutes>
+                </ProtectedAdminRoute>
               }
             />
             <Route
               path="/listadoClientesProfesional"
               element={
-                <ProtectedRoutes>
+                <ProtectedAdminRoute>
                   <ListadoClientesPorProfesional />
-                </ProtectedRoutes>
+                </ProtectedAdminRoute>
               }
             />
             <Route
               path="/informeServicios"
               element={
-                <ProtectedRoutes>
+                <ProtectedAdminRoute>
                   <ReportForm />
-                </ProtectedRoutes>
+                </ProtectedAdminRoute>
+              }
+            />
+            <Route
+              path="/informeIngresos"
+              element={
+                <ProtectedAdminRoute>
+                  <ReportIngresos />
+                </ProtectedAdminRoute>
               }
             />
             <Route
               path="/admin"
               element={
-                <ProtectedRoutes>
+                <ProtectedAdminRoute>
                   <LandingAdmin />
-                </ProtectedRoutes>
+                </ProtectedAdminRoute>
               }
             />
             <Route
               path="/homeProfesional"
               element={
-                <ProtectedRoutes>
+                <ProtectedProfessionalRoute>
                   <LandingProfesional />
-                </ProtectedRoutes>
+                </ProtectedProfessionalRoute>
               }
             />
             <Route
-              path="/empleo"
+              path="/homeSecretaria"
               element={
-                <ProtectedRoutes> element={<Empleo />} </ProtectedRoutes>
+                <ProtectedSecretaryRoute>
+                  <LandingSecretaria />
+                </ProtectedSecretaryRoute>
               }
             />
-            <Route
-              path="/noticias"
-              element={
-                <ProtectedRoutes>
-                  {" "}
-                  <Noticias />{" "}
-                </ProtectedRoutes>
-              }
-            />
-            <Route
-              path="/quienes-somos"
-              element={
-                <ProtectedRoutes>
-                  <QuienesSomos />{" "}
-                </ProtectedRoutes>
-              }
-            />
-            <Route
-              path="/servicios"
-              element={
-                <ProtectedRoutes>
-                  {" "}
-                  <Servicios />{" "}
-                </ProtectedRoutes>
-              }
-            />
+            <Route path="/empleo" element={<Empleo />} />
+            <Route path="/pagos" element={<RegistrarPago />} />
+            <Route path="/noticias" element={<Noticias />} />
+            <Route path="/quienes-somos" element={<QuienesSomos />} />
+            <Route path="/servicios" element={<Servicios />} />
             <Route path="/opiniones" element={<Opiniones />} />
           </Routes>
           <Footer />

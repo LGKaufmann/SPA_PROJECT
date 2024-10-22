@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import User from "/assets/user.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../../redux/userAction";
+import { fetchUserData, loginUser } from "../../redux/userAction";
 import { Spinner } from "../Spinner/Spinner";
 import background from "/assets/background.jpg";
 
@@ -16,12 +16,14 @@ const Login: React.FC = () => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { loading, token } = useSelector((state: any) => state.users);
+  const { loading } = useSelector((state: any) => state.users);
+  const token = localStorage.getItem("token");
   const [user, setUser] = useState<LoginState>({ email: "", password: "" });
 
   useEffect(() => {
     if (token) {
       navigate("/home");
+      dispatch<any>(fetchUserData(token));
     }
   }, [token, navigate]);
 

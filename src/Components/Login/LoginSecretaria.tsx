@@ -11,7 +11,7 @@ interface LoginState {
   password: string;
 }
 
-const LoginProfesionales: React.FC = () => {
+const LoginSecretaria: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
@@ -22,6 +22,7 @@ const LoginProfesionales: React.FC = () => {
     email: "",
     password: "",
   });
+  const [userLoaded, setUserLoaded] = useState(false); // Estado para controlar si el usuario está cargado
 
   useEffect(() => {
     if (token) {
@@ -29,12 +30,14 @@ const LoginProfesionales: React.FC = () => {
     }
   }, [token, dispatch]);
 
-  // Check if user data has been loaded and navigate if it exists
   useEffect(() => {
-    if (user && !loading) {
-      navigate("/homeProfesional");
+    if (user) {
+      setUserLoaded(true); // Marcar que el usuario está cargado
+      if (user.userType) {
+        navigate("/homeSecretaria"); // Redirigir si el usuario tiene tipo
+      }
     }
-  }, [user, loading, navigate]);
+  }, [user, navigate]);
 
   const inputsStyle =
     "h-12 w-full pl-6 rounded-3xl bg-white text-black shadow-inner shadow-gray-300 font-semibold text-lg placeholder:text-[#cb0c4f] placeholder:font-semibold";
@@ -77,7 +80,7 @@ const LoginProfesionales: React.FC = () => {
             className="w-32 h-32 md:w-64 md:h-64"
           />
           <h2 className="text-4xl font-bold text-[#cb0c4f] text-center">
-            Profesionales
+            Secretario/a
           </h2>
         </div>
         <section className="w-full flex flex-col items-center gap-4">
@@ -112,4 +115,4 @@ const LoginProfesionales: React.FC = () => {
   );
 };
 
-export default LoginProfesionales;
+export default LoginSecretaria;

@@ -4,6 +4,7 @@ import "react-calendar/dist/Calendar.css";
 import { useDispatch, useSelector } from "react-redux";
 import { crearTurno } from "../../redux/servicesAction"; // Asegúrate de importar la acción para crear un turno
 import { obtenerProfesionales } from "../../redux/userAction";
+import { Navigate, useNavigate } from "react-router-dom";
 
 interface ICard {
   id: string;
@@ -14,7 +15,7 @@ interface ICard {
 
 const CardLanding: React.FC<ICard> = ({ id, nombre, descripcion, precio }) => {
   const dispatch = useDispatch();
-  const { user } = useSelector((state: any) => state.users);
+  const navigate = useNavigate();
   const { profesionales } = useSelector((state: any) => state.users); // Obtener la lista de profesionales del estado
   const [date, setDate] = useState(new Date());
   const [time, setTime] = useState("");
@@ -54,6 +55,15 @@ const CardLanding: React.FC<ICard> = ({ id, nombre, descripcion, precio }) => {
 
     // Llama a la acción para crear el turno
     await dispatch<any>(crearTurno(turnoData, token as string));
+    navigate("/pagos", {
+      state: {
+        precio, // Precio del servicio
+        servicio: {
+          id: id, // Id del servicio
+          nombre: nombre, // Nombre del servicio
+        },
+      },
+    });
     setIsFormVisible(false);
     setSelectedProfesional(""); // Resetear la selección del profesional
   };

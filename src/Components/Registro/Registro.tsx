@@ -79,7 +79,13 @@ const Registro: React.FC = () => {
     if (validateForm()) {
       dispatch<any>(registerUser(formValues)); // Ahora también envía el rol
       console.log("Formulario enviado", formValues);
-      navigate("/login");
+      if (formValues.userType === "cliente") {
+        navigate("/login");
+      } else if (formValues.userType === "profesional") {
+        navigate("/loginProfesional");
+      } else if (formValues.userType === "secretaria") {
+        navigate("/loginSecretaria");
+      }
     }
   };
 
@@ -216,6 +222,8 @@ const Registro: React.FC = () => {
           >
             <option value="cliente">Cliente</option>
             <option value="profesional">Profesional</option>
+            <option value="secretaria">Secretaria</option>{" "}
+            {/* Nueva opción añadida */}
           </select>
           {errors.userType && (
             <p className="text-red-500 text-sm">{errors.userType}</p>
